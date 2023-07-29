@@ -1,9 +1,18 @@
-package domain.entity;
+package domain.models.entity;
+
+
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 
 import java.util.Objects;
 
-public class BaseEntity<ID> {
+public abstract class BaseEntity<ID> {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ID id;
 
     public ID getId() {

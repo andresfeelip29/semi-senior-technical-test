@@ -1,10 +1,12 @@
 package com.co.technicaltest.neoris.client.services;
 
+import com.co.technicaltest.neoris.client.client.AccountRestClient;
 import com.co.technicaltest.neoris.client.exceptions.ClientNotFoundException;
 import com.co.technicaltest.neoris.client.mapper.ClientMapper;
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
 import com.co.technicaltest.neoris.client.models.entity.Client;
+import com.co.technicaltest.neoris.client.models.entity.ClientAccount;
 import com.co.technicaltest.neoris.client.repositories.ClientRepository;
 import domain.models.enums.ExceptionMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +27,14 @@ public class ClientServiceImpl implements ClientService {
 
     private final ClientMapper clientMapper;
 
-    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper clientMapper) {
+    private final AccountRestClient accountRestClient;
+
+    public ClientServiceImpl(ClientRepository clientRepository,
+                             ClientMapper clientMapper,
+                             AccountRestClient accountRestClient) {
         this.clientRepository = clientRepository;
         this.clientMapper = clientMapper;
+        this.accountRestClient = accountRestClient;
     }
 
     @Override
@@ -38,6 +45,22 @@ public class ClientServiceImpl implements ClientService {
                 .stream()
                 .map(this.clientMapper::clientToClientResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<ClientResponseDTO> findClientAccountDetail(Long clientId) {
+        log.info("Se realiza consulta de cliente con id: {}", clientId);
+        Client client = this.clientRepository.findById(clientId).
+                orElseThrow(() -> new ClientNotFoundException(ExceptionMessage.CLIENT_NOT_FOUND.getMessage()));
+        if (!client.getClientAccounts().isEmpty()) {
+            List<Long> ids = client.getClientAccounts()
+                    .stream()
+                    .map(ClientAccount::getAccountId).toList();
+            client.setAccounts(this.accountRestClient.getAllAccoutDetail(ids));
+            log.info("Se realiza consulta a microservicios cuentas, con los siguientes ids: {}", ids);
+        }
+        return Optional.ofNullable(this.clientMapper.clientToClientResponseDto(client));
     }
 
     @Override

@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "microservice-account" , url = "")
+@FeignClient(name = "microservice-account", url = "api/v1/cuentas")
 public interface AccountRestClient {
 
     @GetMapping("/")
-    List<Account> listUserByCourse(@RequestParam Iterable<Long> ids);
+    List<Account> getAllAccoutDetail(@RequestParam Iterable<Long> ids);
 
 }

@@ -3,6 +3,8 @@ package com.co.technicaltest.neoris.client.models.entity;
 import com.co.technicaltest.neoris.client.models.Account;
 import domain.models.Person;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -10,16 +12,17 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "usuario")
 @Entity
-public class Client extends Person<Long> {
+public class Client extends Person {
 
+    @NotEmpty
     @Column(name = "contraseña")
     private String password;
 
+    @NotNull
     @Column(name = "estado")
     private Boolean status;
 

@@ -5,21 +5,22 @@ package domain.models.entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 
 
 import java.util.Objects;
-
-public abstract class BaseEntity<ID> {
+@MappedSuperclass
+public abstract class BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private ID id;
+    private Long id;
 
-    public ID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(ID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -27,7 +28,7 @@ public abstract class BaseEntity<ID> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BaseEntity<?> that = (BaseEntity<?>) o;
+        BaseEntity that = (BaseEntity) o;
         return getId().equals(that.getId());
     }
 

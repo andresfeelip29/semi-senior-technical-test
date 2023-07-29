@@ -44,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
         return this.clientRepository.findAll()
                 .stream()
                 .map(this.clientMapper::clientToClientResponseDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

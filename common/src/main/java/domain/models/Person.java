@@ -6,14 +6,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
 @MappedSuperclass
-public abstract class Person<ID> extends BaseEntity<ID> {
+public abstract class Person extends BaseEntity {
 
-    @NotNull
+    @NotEmpty
     @Column(name = "nombres")
     protected String name;
 
@@ -26,15 +27,15 @@ public abstract class Person<ID> extends BaseEntity<ID> {
     @Column(name = "edad")
     protected Integer age;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "indentificacion")
     protected String identification;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "direccion_residencia")
     protected String address;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "numero_telefono")
     protected String phone;
 
@@ -91,7 +92,7 @@ public abstract class Person<ID> extends BaseEntity<ID> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Person<?> person = (Person<?>) o;
+        Person person = (Person) o;
         return getName().equals(person.getName()) && getGender() == person.getGender() && getAge().equals(person.getAge()) && getIdentification().equals(person.getIdentification()) && getAddress().equals(person.getAddress()) && getPhone().equals(person.getPhone());
     }
 

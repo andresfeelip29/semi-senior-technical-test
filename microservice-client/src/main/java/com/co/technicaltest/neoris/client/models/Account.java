@@ -1,6 +1,7 @@
 package com.co.technicaltest.neoris.client.models;
 
 
+import domain.models.enums.BankAccountType;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
 public class Account {
 
     private String accountNumber;
-    private String accountType;
+    private BankAccountType accountType;
     private BigDecimal initialBalance;
     private Boolean status;
 

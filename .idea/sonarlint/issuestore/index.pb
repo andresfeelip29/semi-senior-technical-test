@@ -7,12 +7,8 @@ I
 microservice-account/mvnw,e\e\ee0e114e54a22423d9ac2e393257da3ddce8464c
 M
 microservice-account/mvnw.cmd,6\d\6de56648b2d457be38f4548a0c35c71413a87641
-L
-microservice-account/pom.xml,8\0\80a534ce8438887cf6f3302f2cd9af075b52808b
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
->
-common/pom.xml,4\8\488bdbea7e8b73c44bd2a54e63f6012f10969196
 œ
 lmicroservice-client/src/main/java/com/co/technicaltest/neoris/client/exceptions/ClientNotFoundException.java,3\e\3e5bd5096fd2ce601d7e61cce50ba289563a156d
 j

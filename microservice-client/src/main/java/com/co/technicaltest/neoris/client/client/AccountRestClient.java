@@ -10,7 +10,7 @@ import java.util.List;
 @FeignClient(name = "microservice-account", url = "${microservices.account.url}/cuentas")
 public interface AccountRestClient {
 
-    @GetMapping("/")
-    List<Account> getAllAccoutDetail(@RequestParam Iterable<Long> ids);
+    @GetMapping("/external/")
+    List<Account> getAllAccoutDetail(@RequestParam Iterable<Long> accountsIds);
 
 }

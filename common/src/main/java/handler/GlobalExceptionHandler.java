@@ -1,5 +1,6 @@
 package handler;
 
+import domain.exception.DomainException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
@@ -20,6 +21,14 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ResponseBody
+    @ExceptionHandler(value = {DomainException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleException(DomainException exception) {
+        log.error(exception.getMessage(), exception);
+        return this.buildErrorResponse(exception, exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorResponse> handleException(Exception exception) {
@@ -29,7 +38,7 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
     public ResponseEntity<ErrorResponse> handleException(MethodArgumentNotValidException e) {
         log.error(e.getMessage(), e);
         List<String> errs = this.fieldValidate(e);

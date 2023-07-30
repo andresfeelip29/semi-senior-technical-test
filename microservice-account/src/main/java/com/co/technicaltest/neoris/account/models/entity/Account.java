@@ -38,7 +38,8 @@ public class Account extends BaseEntity {
     @Column(name = "estado")
     private Boolean status;
 
-    @ManyToOne
+    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "cliente_id")
     private AccountClient accountClient;
 

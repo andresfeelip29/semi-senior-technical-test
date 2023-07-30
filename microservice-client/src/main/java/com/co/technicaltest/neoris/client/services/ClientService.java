@@ -1,6 +1,7 @@
 package com.co.technicaltest.neoris.client.services;
 
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
+import com.co.technicaltest.neoris.client.models.dto.ClientQueryDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
 
 
@@ -14,5 +15,7 @@ public interface ClientService {
     ClientResponseDTO saveClient(ClientDTO clientDTO);
     ClientResponseDTO updateClient(ClientDTO clientDTO, Long clientId);
     Boolean deleteClient(Long clientId);
+    void deleteAccountClientFromMicroserviceAccount(Long accountId);
+    Optional<ClientQueryDTO> findClientByIdFromMicroserviceAccount(Long clientId);
 
 }

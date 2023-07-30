@@ -4,10 +4,13 @@ import com.co.technicaltest.neoris.client.client.AccountRestClient;
 import com.co.technicaltest.neoris.client.exceptions.ClientNotFoundException;
 import com.co.technicaltest.neoris.client.mapper.ClientMapper;
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
+import com.co.technicaltest.neoris.client.models.dto.ClientQueryDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
 import com.co.technicaltest.neoris.client.models.entity.Client;
 import com.co.technicaltest.neoris.client.models.entity.ClientAccount;
+import com.co.technicaltest.neoris.client.repositories.ClientAccountRepository;
 import com.co.technicaltest.neoris.client.repositories.ClientRepository;
+import domain.exception.client.ClientAccountNotFoundException;
 import domain.models.enums.ExceptionMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,13 +32,16 @@ public class ClientServiceImpl implements ClientService {
 
     private final AccountRestClient accountRestClient;
 
+    private final ClientAccountRepository clientAccountRepository;
 
     public ClientServiceImpl(ClientRepository clientRepository,
                              ClientMapper clientMapper,
-                             AccountRestClient accountRestClient) {
+                             AccountRestClient accountRestClient,
+                             ClientAccountRepository clientAccountRepository) {
         this.clientRepository = clientRepository;
         this.clientMapper = clientMapper;
         this.accountRestClient = accountRestClient;
+        this.clientAccountRepository = clientAccountRepository;
     }
 
     @Override
@@ -103,5 +109,25 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository.delete(client);
         log.info("Se elimina usuario con id: {}", clientId);
         return true;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<ClientQueryDTO> findClientByIdFromMicroserviceAccount(Long clientId) {
+        log.info("Se realiza consulta desde microservicio de cuentas, a cliente con id: {}", clientId);
+        return Optional.ofNullable(this.clientRepository.findById(clientId)
+                .map(this.clientMapper::clientToClientQueryDto)
+                .orElseThrow(() -> new ClientNotFoundException(String.format(ExceptionMessage.CLIENT_NOT_FOUND.getMessage(), clientId))));
+    }
+
+    @Override
+    @Transactional
+    public void deleteAccountClientFromMicroserviceAccount(Long accountId) {
+        log.info("Se inicia proceso de eliminar de cuenta con id: {}, desde microservicio de cuentas", accountId);
+        ClientAccount clientAccount = this.clientAccountRepository.findById(accountId).
+                orElseThrow(() -> new ClientAccountNotFoundException(String.format(ExceptionMessage.ACCOUNT_ASSOCIATED_TO_CLIENT_NO_FOUND.getMessage(),
+                        accountId)));
+        this.clientAccountRepository.delete(clientAccount);
+        log.info("Se elimina cuenta con id: {}, asociada al usuario con id: {}", accountId, clientAccount.getId());
     }
 }

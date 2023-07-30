@@ -7,6 +7,7 @@ import lombok.*;
 @Data
 public class Client {
 
+    private Long id;
     private String name;
     private Gender gender;
     private Integer age;

@@ -2,6 +2,7 @@ package com.co.technicaltest.neoris.client.mapper;
 
 import com.co.technicaltest.neoris.client.models.Account;
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
+import com.co.technicaltest.neoris.client.models.dto.ClientQueryDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
 import com.co.technicaltest.neoris.client.models.entity.Client;
 import com.co.technicaltest.neoris.client.models.entity.ClientAccount;
@@ -23,6 +24,8 @@ public interface ClientMapper {
     ClientResponseDTO clientToClientResponseDto(Client client);
 
     Client updateClientDtoToClient(@MappingTarget Client client, ClientDTO clientDTO);
+
+    ClientQueryDTO clientToClientQueryDto(Client client);
 
     @Named("clientToIdList")
     public static List<Long> convertListIds(List<ClientAccount> clientAccountList) {

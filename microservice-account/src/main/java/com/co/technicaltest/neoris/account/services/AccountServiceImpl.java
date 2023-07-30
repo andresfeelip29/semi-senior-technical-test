@@ -2,6 +2,7 @@ package com.co.technicaltest.neoris.account.services;
 
 import com.co.technicaltest.neoris.account.client.ClientRestClient;
 import com.co.technicaltest.neoris.account.exceptions.AccountNotFoundException;
+import com.co.technicaltest.neoris.account.exceptions.AccountTypeNotFoundException;
 import com.co.technicaltest.neoris.account.mappers.AccountMapper;
 import com.co.technicaltest.neoris.account.models.Client;
 import com.co.technicaltest.neoris.account.models.dto.AccountDTO;
@@ -9,7 +10,9 @@ import com.co.technicaltest.neoris.account.models.dto.AccountQueryDTO;
 import com.co.technicaltest.neoris.account.models.dto.AccountResponseDTO;
 import com.co.technicaltest.neoris.account.models.entity.Account;
 import com.co.technicaltest.neoris.account.models.entity.AccountClient;
+import com.co.technicaltest.neoris.account.models.entity.AccountType;
 import com.co.technicaltest.neoris.account.repositories.AccountRepository;
+import com.co.technicaltest.neoris.account.repositories.AccountTypeRepository;
 import domain.exception.client.ClientAccountNotFoundException;
 import domain.exception.client.ClientNotFoundException;
 import domain.models.enums.ExceptionMessage;
@@ -33,13 +36,17 @@ public class AccountServiceImpl implements AccountService {
 
     private final ClientRestClient clientRestClient;
 
+    private final AccountTypeRepository accountTypeRepository;
+
 
     public AccountServiceImpl(AccountRepository accountRepository,
                               AccountMapper accountMapper,
-                              ClientRestClient clientRestClient) {
+                              ClientRestClient clientRestClient,
+                              AccountTypeRepository accountTypeRepository) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
         this.clientRestClient = clientRestClient;
+        this.accountTypeRepository = accountTypeRepository;
     }
 
     @Override
@@ -100,6 +107,10 @@ public class AccountServiceImpl implements AccountService {
             Account account = this.accountMapper.accountDtoToAccount(accountDTO);
             account.setAccountClient(new AccountClient(clientFromMicroserviceClient.getId()));
             account.setAccountNumber(GenerateRamdomAccountNumber.generateBankAccountNumber());
+            AccountType accountType = this.accountTypeRepository.findByBankAccountType(accountDTO.accountType());
+            if(Objects.isNull(accountType))
+                throw new AccountTypeNotFoundException(String.format(ExceptionMessage.ACCOUNT_TYPE_NOT_FOUND.getMessage(), accountDTO.accountType()));
+            account.setAccountType(accountType);
             response = this.accountMapper.accountToAccountResponseDto(this.accountRepository.save(account));
         } catch (FeignException e) {
             log.info("No se encontro cliente con id: {} en consulta a microservicio clientes", accountDTO.clientId());
@@ -117,6 +128,9 @@ public class AccountServiceImpl implements AccountService {
         Account account = this.accountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException(String.format(ExceptionMessage.ACCOUNT_NOT_FOUND.getMessage(), accountId)));
         account = this.accountMapper.updateAccountToAccountDto(account, accountDTO);
+        AccountType accountType = this.accountTypeRepository.findByBankAccountType(accountDTO.accountType());
+        if(!Objects.isNull(accountType))
+            account.setAccountType(accountType);
         response = this.accountMapper.accountToAccountResponseDto(this.accountRepository.save(account));
         return response;
     }

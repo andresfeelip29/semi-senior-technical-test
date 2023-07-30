@@ -15,11 +15,15 @@ import java.util.List;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface AccountMapper {
 
+    @Mapping(target = "accountType", ignore = true)
     Account accountDtoToAccount(AccountDTO accountDTO);
 
+    @Mapping(target = "accountType",source = "accountType.bankAccountType")
     AccountQueryDTO accountToAccountQueryDto(Account accounts);
 
+    @Mapping(target = "accountType",source = "accountType.bankAccountType")
     AccountResponseDTO accountToAccountResponseDto(Account account);
 
+    @Mapping(target = "accountType", ignore = true)
     Account updateAccountToAccountDto(@MappingTarget Account account, AccountDTO accountDTO);
 }

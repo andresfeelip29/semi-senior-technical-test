@@ -1,5 +1,6 @@
 package com.co.technicaltest.neoris.account.exceptions.handler;
 
+import com.co.technicaltest.neoris.account.exceptions.AccountTypeNotFoundException;
 import domain.exception.client.ClientAccountNotFoundException;
 import handler.ErrorResponse;
 import handler.GlobalExceptionHandler;
@@ -18,7 +19,15 @@ public class AccountGlobalExceptionHandler extends GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = {ClientAccountNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleException(Throwable e) {
+    public ResponseEntity<ErrorResponse> handleException(ClientAccountNotFoundException e) {
+        log.error(e.getMessage(), e);
+        return this.buildErrorResponse(e, e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = {AccountTypeNotFoundException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleException(AccountTypeNotFoundException e) {
         log.error(e.getMessage(), e);
         return this.buildErrorResponse(e, e.getMessage(), HttpStatus.BAD_REQUEST);
     }

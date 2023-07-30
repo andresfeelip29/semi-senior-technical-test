@@ -1,14 +1,11 @@
 package com.co.technicaltest.neoris.client.controllers;
 
 
-import com.co.technicaltest.neoris.client.client.AccountRestClient;
 import com.co.technicaltest.neoris.client.exceptions.handler.ClientGlobalExceptionHandler;
 import com.co.technicaltest.neoris.client.mapper.ClientMapper;
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
 import com.co.technicaltest.neoris.client.models.entity.Client;
-import com.co.technicaltest.neoris.client.repositories.ClientRepository;
-import com.co.technicaltest.neoris.client.services.ClientService;
 import com.co.technicaltest.neoris.client.services.ClientServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -16,13 +13,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import domain.models.enums.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -38,7 +31,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 

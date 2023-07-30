@@ -2,7 +2,7 @@ package domain.models.enums;
 
 public enum ExceptionMessage {
 
-    CLIENT_NOT_FOUND("No existe cliente registrado en sistema!");
+    CLIENT_NOT_FOUND("No existe cliente registrado en sistema con id: %d!");
 
     private final String message;
 

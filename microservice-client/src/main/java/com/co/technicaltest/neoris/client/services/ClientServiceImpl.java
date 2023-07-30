@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Slf4j
 @Service
@@ -28,6 +28,7 @@ public class ClientServiceImpl implements ClientService {
     private final ClientMapper clientMapper;
 
     private final AccountRestClient accountRestClient;
+
 
     public ClientServiceImpl(ClientRepository clientRepository,
                              ClientMapper clientMapper,
@@ -69,7 +70,7 @@ public class ClientServiceImpl implements ClientService {
         log.info("Se realiza consulta de cliente con id: {}", clientId);
         return Optional.ofNullable(this.clientRepository.findById(clientId)
                 .map(this.clientMapper::clientToClientResponseDto)
-                .orElseThrow(() -> new ClientNotFoundException(ExceptionMessage.CLIENT_NOT_FOUND.getMessage())));
+                .orElseThrow(() -> new ClientNotFoundException(String.format(ExceptionMessage.CLIENT_NOT_FOUND.getMessage(), clientId))));
     }
 
     @Override
@@ -86,7 +87,8 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public ClientResponseDTO updateClient(ClientDTO clientDTO, Long clientId) {
         Client client = this.clientRepository.findById(clientId).
-                orElseThrow(() -> new ClientNotFoundException(ExceptionMessage.CLIENT_NOT_FOUND.getMessage()));
+                orElseThrow(() -> new ClientNotFoundException(String.format(ExceptionMessage.CLIENT_NOT_FOUND.getMessage(),
+                        clientId)));
         client = this.clientRepository.save(this.clientMapper.updateClientDtoToClient(client, clientDTO));
         log.info("Se actualiza usuario con id: {}", client.getId());
         return this.clientMapper.clientToClientResponseDto(client);
@@ -96,7 +98,8 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public Boolean deleteClient(Long clientId) {
         Client client = this.clientRepository.findById(clientId).
-                orElseThrow(() -> new ClientNotFoundException(ExceptionMessage.CLIENT_NOT_FOUND.getMessage()));
+                orElseThrow(() -> new ClientNotFoundException(String.format(ExceptionMessage.CLIENT_NOT_FOUND.getMessage(),
+                        clientId)));
         this.clientRepository.delete(client);
         log.info("Se elimina usuario con id: {}", clientId);
         return true;

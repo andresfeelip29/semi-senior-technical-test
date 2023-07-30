@@ -13,7 +13,8 @@ import java.util.List;
 
 @Component
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ClientMapper {
     Client clientDtoToClient(ClientDTO clientDTO);
 

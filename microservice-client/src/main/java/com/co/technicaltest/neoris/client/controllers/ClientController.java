@@ -2,6 +2,7 @@ package com.co.technicaltest.neoris.client.controllers;
 
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
+import com.co.technicaltest.neoris.client.services.ClientService;
 import com.co.technicaltest.neoris.client.services.ClientServiceImpl;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -10,17 +11,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 @RestController
-@RequestMapping("api/v1/clientes")
+@RequestMapping("/api/v1/clientes")
 public class ClientController {
 
-    private final ClientServiceImpl clientService;
+    private final ClientService clientService;
 
-    public ClientController(ClientServiceImpl clientService) {
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 

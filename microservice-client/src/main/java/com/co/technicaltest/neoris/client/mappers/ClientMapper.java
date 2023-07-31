@@ -1,4 +1,4 @@
-package com.co.technicaltest.neoris.client.mapper;
+package com.co.technicaltest.neoris.client.mappers;
 
 import com.co.technicaltest.neoris.client.models.Account;
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;

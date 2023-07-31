@@ -2,7 +2,7 @@ package com.co.technicaltest.neoris.client.controllers;
 
 
 import com.co.technicaltest.neoris.client.exceptions.handler.ClientGlobalExceptionHandler;
-import com.co.technicaltest.neoris.client.mapper.ClientMapper;
+import com.co.technicaltest.neoris.client.mappers.ClientMapper;
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
 import com.co.technicaltest.neoris.client.models.entity.Client;

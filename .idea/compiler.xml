@@ -7,9 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="microservice-account" />
         <module name="common" />
         <module name="microservice-client" />
-        <module name="microservice-account" />
+        <module name="microservice-movement" />
       </profile>
     </annotationProcessing>
   </component>
@@ -18,6 +19,7 @@
       <module name="common" options="-parameters" />
       <module name="microservice-account" options="-parameters" />
       <module name="microservice-client" options="-parameters" />
+      <module name="microservice-movement" options="-parameters" />
     </option>
   </component>
 </project>

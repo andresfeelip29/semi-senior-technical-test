@@ -2,7 +2,7 @@ package com.co.technicaltest.neoris.client.services;
 
 import com.co.technicaltest.neoris.client.client.AccountRestClient;
 import com.co.technicaltest.neoris.client.exceptions.ClientNotFoundException;
-import com.co.technicaltest.neoris.client.mapper.ClientMapper;
+import com.co.technicaltest.neoris.client.mappers.ClientMapper;
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientQueryDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

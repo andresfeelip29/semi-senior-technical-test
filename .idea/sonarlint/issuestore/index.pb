@@ -1,24 +1,14 @@
 
-K
-microservice-client/HELP.md,8\a\8afb12a8dfd1532538836997c616c1955bdbff43
-L
-microservice-account/HELP.md,8\8\88d77977b7ba262b497dd88b6ffaa0a7ddf8e71c
 I
 microservice-account/mvnw,e\e\ee0e114e54a22423d9ac2e393257da3ddce8464c
 M
 microservice-account/mvnw.cmd,6\d\6de56648b2d457be38f4548a0c35c71413a87641
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-K
-microservice-client/pom.xml,8\2\829ff2336d53d193a08e5a16b22da3d5cbffac5b
 œ
 lmicroservice-client/src/test/java/com/co/technicaltest/neoris/client/MicroserviceClientApplicationTests.java,d\8\d852f7a9596cd854b72438ce531547f054b6e7e9
 i
 9common/src/main/java/domain/models/entity/BaseEntity.java,5\c\5c72c7b26bd68ed05cd6e1c0be6962a61f36ed9e
 d
 4common/src/main/java/domain/models/enums/Gender.java,c\c\cc16f01e342ebf014301bdcbc2e7ac1a57f2f1ce
->
-common/pom.xml,4\8\488bdbea7e8b73c44bd2a54e63f6012f10969196
 —
 gmicroservice-client/src/main/java/com/co/technicaltest/neoris/client/repositories/ClientRepository.java,f\8\f84447620a3e825e04999f323dd12b1ad796123d
 —
@@ -53,19 +43,13 @@ smicroservice-account/src/main/java/com/co/technicaltest/neoris/account/exceptio
 |microservice-account/src/main/java/com/co/technicaltest/neoris/account/exceptions/handler/AccountGlobalExceptionHandler.java,0\7\0767c4c5b1a6c165509350abed2e515ff605592f
 Ž
 ^microservice-client/src/main/java/com/co/technicaltest/neoris/client/models/dto/ClientDTO.java,5\c\5c96780eae4c97c1e6639e1f2708be52b00874e6
-^
-.common/src/main/java/domain/models/Person.java,d\8\d8c36850c4bbb225875b85760d5bee366af19630
 š
 jmicroservice-account/src/main/java/com/co/technicaltest/neoris/account/repositories/AccountRepository.java,0\6\06fbd3f2e21b5b55703f0a296f363cda36a9dfcb
 ž
 nmicroservice-account/src/main/java/com/co/technicaltest/neoris/account/repositories/AccountTypeRepository.java,c\a\caedb34a2347a60cacd903923f79a9b3100fbec6
-L
-microservice-account/pom.xml,8\0\80a534ce8438887cf6f3302f2cd9af075b52808b
 C
 docker-compose.yaml,e\f\ef8def03dc8f162799089e9b5f4321201c8810d5
 ‘
 amicroservice-account/src/main/java/com/co/technicaltest/neoris/account/mappers/AccountMapper.java,a\e\aebc1e3947057409f29dab0c972d0a2b57c80417
 m
 =common/src/main/java/domain/models/ClientAccountQueryDTO.java,6\3\6373f9e1dd4f45b1546dad6e0434235de5fc8baf
-—
-gmicroservice-account/src/main/java/com/co/technicaltest/neoris/account/models/entity/AccountClient.java,f\6\f6a47bccd5687132e93596f82282163564afe968

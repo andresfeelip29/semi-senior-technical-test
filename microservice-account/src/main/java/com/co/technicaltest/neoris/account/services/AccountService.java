@@ -11,7 +11,7 @@ public interface AccountService {
 
     List<AccountResponseDTO> getAllAccounts();
 
-    List<AccountQueryDTO> getAllAccountsFromMicroserviceClient(Iterable<Long> accountsIds);
+    List<AccountQueryDTO> getAllAccountsFromMicroserviceClient(List<Long> accountsIds);
 
     Optional<AccountResponseDTO> findAccountClientDetail(Long accountId);
 

@@ -7,7 +7,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: sasa
-      MYSQL_DATABASE: bd_clientes
+      MYSQL_DATABASE: db_cliente
     volumes:
       - data-mysql:/var/lib/mysql
     restart: always
@@ -17,10 +17,10 @@ services:
     container_name: postgres14
     image: postgres:14-alpine
     ports:
-      - "5532:5432"
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: sasa
-      POSTGRES_DB: db_cuentas
+      POSTGRES_DB: db_cuenta
     volumes:
       - data-postgres:/var/lib/postgresql/data
     restart: always

@@ -6,5 +6,5 @@ import domain.models.enums.BankAccountType;
 import java.math.BigDecimal;
 
 public record AccountResponseDTO(Long id, String accountNumber, BankAccountType accountType,
-                                 BigDecimal intialBalance, Boolean status, Client client) {
+                                 BigDecimal initialBalance, Boolean status, Client client) {
 }

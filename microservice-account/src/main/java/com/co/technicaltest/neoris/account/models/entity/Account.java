@@ -17,7 +17,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "cuenta")
+@Table(name = "cuentas")
 @Entity
 public class Account extends BaseEntity {
 
@@ -32,14 +32,14 @@ public class Account extends BaseEntity {
 
     @NotNull
     @Column(name = "saldo_incial")
-    private BigDecimal intialBalance;
+    private BigDecimal initialBalance;
 
     @NotNull
     @Column(name = "estado")
     private Boolean status;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne
     @JoinColumn(name = "cliente_id")
     private AccountClient accountClient;
 
@@ -52,11 +52,11 @@ public class Account extends BaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Account account = (Account) o;
-        return getAccountNumber().equals(account.getAccountNumber()) && getAccountType().equals(account.getAccountType()) && getIntialBalance().equals(account.getIntialBalance()) && getStatus().equals(account.getStatus()) && getClient().equals(account.getClient());
+        return getAccountNumber().equals(account.getAccountNumber()) && getAccountType().equals(account.getAccountType()) && getInitialBalance().equals(account.getInitialBalance()) && getStatus().equals(account.getStatus()) && getAccountClient().equals(account.getAccountClient()) && getClient().equals(account.getClient());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getAccountNumber(), getAccountType(), getIntialBalance(), getStatus(), getClient());
+        return Objects.hash(super.hashCode(), getAccountNumber(), getAccountType(), getInitialBalance(), getStatus(), getAccountClient(), getClient());
     }
 }

@@ -10,7 +10,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuario_cuenta")
+@Table(name = "usuarios_cuentas")
 @Entity
 public class ClientAccount extends BaseEntity {
 

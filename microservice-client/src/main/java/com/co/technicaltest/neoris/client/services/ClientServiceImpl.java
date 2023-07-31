@@ -11,12 +11,14 @@ import com.co.technicaltest.neoris.client.models.entity.ClientAccount;
 import com.co.technicaltest.neoris.client.repositories.ClientAccountRepository;
 import com.co.technicaltest.neoris.client.repositories.ClientRepository;
 import domain.exception.client.ClientAccountNotFoundException;
+import domain.models.ClientAccountQueryDTO;
 import domain.models.enums.ExceptionMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -63,7 +65,8 @@ public class ClientServiceImpl implements ClientService {
         if (!client.getClientAccounts().isEmpty()) {
             List<Long> ids = client.getClientAccounts()
                     .stream()
-                    .map(ClientAccount::getAccountId).toList();
+                    .map(ClientAccount::getAccountId)
+                    .toList();
             client.setAccounts(this.accountRestClient.getAllAccoutDetail(ids));
             log.info("Se realiza consulta a microservicios cuentas, con los siguientes ids: {}", ids);
         }
@@ -87,6 +90,23 @@ public class ClientServiceImpl implements ClientService {
         client = this.clientRepository.save(client);
         log.info("Se almacena usuario con id: {}", client.getId());
         return this.clientMapper.clientToClientResponseDto(client);
+    }
+
+    @Override
+    @Transactional
+    public void saveClientAccountFromMicroserviceClient(ClientAccountQueryDTO clientAccountQueryDTO) {
+        log.info("Se realiza consulta desde microservicio de cuentas, para asociar cuenta a usuario : {}", clientAccountQueryDTO);
+        ClientAccount clientAccount = null;
+        if (!Objects.isNull(clientAccountQueryDTO)) {
+            Client client = this.clientRepository.findById(clientAccountQueryDTO.clientId()).
+                    orElseThrow(() -> new ClientNotFoundException(String.format(ExceptionMessage.CLIENT_NOT_FOUND.getMessage(),
+                            clientAccountQueryDTO.clientId())));
+            clientAccount = new ClientAccount();
+            clientAccount.setAccountId(clientAccountQueryDTO.accountId());
+            client.addClientUser(clientAccount);
+            this.clientRepository.save(client);
+            log.info("Se realiza asignacion de cuenta con id: {} a usuario con id : {}", clientAccountQueryDTO.accountId(), clientAccountQueryDTO.clientId());
+        }
     }
 
     @Override

@@ -32,7 +32,7 @@ public class AccountController {
     }
 
     @GetMapping("/external/")
-    public ResponseEntity<List<AccountQueryDTO>> getAllAccountsFromMicroserviceClient(@RequestParam Iterable<Long> accountsIds) {
+    public ResponseEntity<List<AccountQueryDTO>> getAllAccountsFromMicroserviceClient(@RequestParam List<Long> accountsIds) {
         log.info("Se recibe peticion para consulta de todos los clientes");
         return ResponseEntity.ok(this.accountService.getAllAccountsFromMicroserviceClient(accountsIds));
     }

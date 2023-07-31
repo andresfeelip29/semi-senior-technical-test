@@ -3,6 +3,7 @@ package com.co.technicaltest.neoris.client.services;
 import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientQueryDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
+import domain.models.ClientAccountQueryDTO;
 
 
 import java.util.List;
@@ -17,5 +18,6 @@ public interface ClientService {
     Boolean deleteClient(Long clientId);
     void deleteAccountClientFromMicroserviceAccount(Long accountId);
     Optional<ClientQueryDTO> findClientByIdFromMicroserviceAccount(Long clientId);
+    void saveClientAccountFromMicroserviceClient(ClientAccountQueryDTO clientAccountQueryDTO);
 
 }

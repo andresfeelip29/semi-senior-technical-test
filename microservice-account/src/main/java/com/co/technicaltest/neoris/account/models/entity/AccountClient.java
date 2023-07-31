@@ -15,7 +15,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "cuenta_usuario")
+@Table(name = "cuentas_usuarios")
 @Entity
 public class AccountClient extends BaseEntity {
 

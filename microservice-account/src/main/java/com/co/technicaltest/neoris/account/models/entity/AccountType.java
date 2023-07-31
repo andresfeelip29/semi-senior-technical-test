@@ -16,7 +16,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tipo_cuenta")
+@Table(name = "tipos_cuentas")
 @Entity
 public class AccountType extends BaseEntity {
 

@@ -32,7 +32,7 @@ public interface ClientMapper {
         if (clientAccountList != null) {
             return clientAccountList
                     .stream()
-                    .map(ClientAccount::getId)
+                    .map(ClientAccount::getAccountId)
                     .toList();
         }
         return Collections.emptyList();

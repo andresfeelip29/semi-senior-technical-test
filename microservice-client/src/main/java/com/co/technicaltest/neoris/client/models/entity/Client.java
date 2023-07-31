@@ -7,16 +7,20 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuario")
+@Table(name = "usuarios")
 @Entity
 public class Client extends Person {
+
+    public Client(){
+        this.clientAccounts = new ArrayList<>();
+    }
 
     @NotEmpty
     @Column(name = "contraseña")
@@ -27,11 +31,15 @@ public class Client extends Person {
     private Boolean status;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "cuenta_id")
+    @JoinColumn(name = "cliente_id")
     private List<ClientAccount> clientAccounts;
 
     @Transient
     private List<Account> accounts;
+
+    public void addClientUser(ClientAccount clientAccount){
+        this.clientAccounts.add(clientAccount);
+    }
 
     @Override
     public boolean equals(Object o) {

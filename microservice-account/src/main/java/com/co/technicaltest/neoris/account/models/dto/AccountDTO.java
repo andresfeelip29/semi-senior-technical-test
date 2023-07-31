@@ -8,5 +8,5 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 
-public record AccountDTO(@NotNull BankAccountType accountType, @NotNull @Positive BigDecimal intialBalance,
+public record AccountDTO(@NotNull BankAccountType accountType, @NotNull @Positive BigDecimal initialBalance,
                          @NotNull Boolean status, @Positive Long clientId) { }

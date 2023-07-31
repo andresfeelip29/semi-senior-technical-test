@@ -1,10 +1,9 @@
 package com.co.technicaltest.neoris.account.client;
 
 import com.co.technicaltest.neoris.account.models.Client;
+import domain.models.ClientAccountQueryDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "microservice-client", url = "${microservices.client.url}/clientes")
 public interface ClientRestClient {
@@ -14,5 +13,8 @@ public interface ClientRestClient {
 
     @DeleteMapping("/external/{accountId}")
     void deleteAccountClientFromMicroserviceClient(@PathVariable Long accountId);
+
+    @PostMapping("/external/")
+    void saveClientAccountFromMicroserviceClient(@RequestBody ClientAccountQueryDTO clientAccountQueryDTO);
 
 }

@@ -4,6 +4,7 @@ import com.co.technicaltest.neoris.client.models.dto.ClientDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientQueryDTO;
 import com.co.technicaltest.neoris.client.models.dto.ClientResponseDTO;
 import com.co.technicaltest.neoris.client.services.ClientService;
+import domain.models.ClientAccountQueryDTO;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -68,6 +69,14 @@ public class ClientController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PostMapping("/external/")
+    public ResponseEntity<Void> saveClientAccountFromMicroserviceClient(@Valid @RequestBody ClientAccountQueryDTO clientAccountQueryDTO) {
+        log.info("Se recibe peticion desde microservicio cuentas, para asociar cuenta: {} , a usuario con id: {}",
+                clientAccountQueryDTO.accountId(), clientAccountQueryDTO.clientId());
+        this.clientService.saveClientAccountFromMicroserviceClient(clientAccountQueryDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
     @PutMapping("/{clientId}")
     public ResponseEntity<ClientResponseDTO> updateClient(
             @Valid @RequestBody ClientDTO clientDTO, @PathVariable Long clientId) {
@@ -93,7 +102,7 @@ public class ClientController {
 
     @DeleteMapping("/external/{accountId}")
     public ResponseEntity<Void> deleteAccountClientFromMicroserviceAccount(@PathVariable Long accountId) {
-        log.info("Se recibe peticion desde microservicio cuentas, para la eliminacion de cuenta con id: {}" , accountId);
+        log.info("Se recibe peticion desde microservicio cuentas, para la eliminacion de cuenta con id: {}", accountId);
         this.clientService.deleteAccountClientFromMicroserviceAccount(accountId);
         return ResponseEntity.noContent().build();
     }

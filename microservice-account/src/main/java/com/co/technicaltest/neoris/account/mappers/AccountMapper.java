@@ -7,7 +7,6 @@ import com.co.technicaltest.neoris.account.models.entity.Account;
 import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 @Component
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,

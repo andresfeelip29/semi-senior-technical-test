@@ -13,5 +13,5 @@ public interface ExternalRequestService {
 
     Mono<Account> findAccountFromMicroserviceAccount(Long accountId);
 
-    Mono<Void> updateBalanceToAccountFromMicroserviciosAccount(Long accountId, BigDecimal newBalance);
+    Mono<Account> updateBalanceToAccountFromMicroserviciosAccount(Long accountId, BigDecimal newBalance);
 }

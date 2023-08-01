@@ -24,10 +24,10 @@ public class ExternalRequestServiceImpl implements ExternalRequestService {
 
     private final WebClient.Builder webClient;
 
-    @Value("microservices.client.url")
+    @Value("${microservices.client.url}")
     private String urlMicroserviceClient;
 
-    @Value("microservices.account.url")
+    @Value("${microservices.account.url}")
     private String urlMicroserviceAccount;
 
     public ExternalRequestServiceImpl(WebClient.Builder webClient) {
@@ -61,11 +61,10 @@ public class ExternalRequestServiceImpl implements ExternalRequestService {
     }
 
     @Override
-    public Mono<Void> updateBalanceToAccountFromMicroserviciosAccount(Long accountId, BigDecimal newBalance) {
+    public Mono<Account> updateBalanceToAccountFromMicroserviciosAccount(Long accountId, BigDecimal newBalance) {
         log.info("Se realiza solicitud de consulta a microservcios cuentas para actualizar balance de cuenta con id: {}", accountId);
         return this.webClient.build().put()
-                .uri(uriBuilder -> uriBuilder
-                        .path(urlMicroserviceAccount.concat("/external/"))
+                .uri(urlMicroserviceAccount.concat("/external/"), uriBuilder -> uriBuilder
                         .queryParam("accountId", accountId)
                         .queryParam("newBalance", newBalance)
                         .build())
@@ -73,7 +72,6 @@ public class ExternalRequestServiceImpl implements ExternalRequestService {
                 .retrieve()
                 .bodyToMono(Account.class)
                 .switchIfEmpty(Mono.error(new BalanceUpdateException(
-                        String.format(ExceptionMessage.BALANCE_UPDATE_ERROR.getMessage(), accountId))))
-                .then();
+                        String.format(ExceptionMessage.BALANCE_UPDATE_ERROR.getMessage(), accountId))));
     }
 }

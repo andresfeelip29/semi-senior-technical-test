@@ -57,9 +57,8 @@ public class MovementHandler {
 
     public Mono<ServerResponse> deleteMovement(ServerRequest request) {
         String id = request.pathVariable("id");
-        return this.movementService.findById(id)
-                .flatMap(movement -> this.movementService.deleteMovement(id)
-                        .then(ServerResponse.noContent().build()))
+        return this.movementService.deleteMovement(id)
+                .then(ServerResponse.noContent().build())
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 

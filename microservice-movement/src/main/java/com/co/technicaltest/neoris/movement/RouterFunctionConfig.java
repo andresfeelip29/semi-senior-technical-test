@@ -19,10 +19,7 @@ public class RouterFunctionConfig {
         return new WebProperties.Resources();
     }
 
-    @Bean
-    public ServerCodecConfigurer serverCodecConfigurer() {
-        return ServerCodecConfigurer.create();
-    }
+    
 
     @Bean
     public RouterFunction<ServerResponse> routes(MovementHandler handler) {

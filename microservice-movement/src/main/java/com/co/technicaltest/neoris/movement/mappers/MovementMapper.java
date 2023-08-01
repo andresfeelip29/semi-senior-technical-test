@@ -15,14 +15,8 @@ import reactor.core.publisher.Mono;
 public interface MovementMapper {
 
 
-    @Mapping(source = "accountType", target = "accountType", qualifiedByName = "getStringAccountType")
+
     MovementResponseDTO movementToMovementResponseDto(Movement movement);
 
 
-
-
-    @Named("getStringAccountType")
-    public static String getStringAccountType(MovementType movementType) {
-        return movementType.getType();
-    }
 }

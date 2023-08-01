@@ -1,6 +1,7 @@
 package com.co.technicaltest.neoris.movement.services.impl;
 
 import com.co.technicaltest.neoris.movement.exceptions.AccountAndClientNotValidRelationshipException;
+import com.co.technicaltest.neoris.movement.exceptions.BalanceUpdateException;
 import com.co.technicaltest.neoris.movement.exceptions.MovementNotFoundException;
 import com.co.technicaltest.neoris.movement.mappers.MovementMapper;
 import com.co.technicaltest.neoris.movement.models.Account;
@@ -72,7 +73,7 @@ public class MovementServiceImpl implements MovementService {
         Mono<Account> account = this.externalRequestService.findAccountFromMicroserviceAccount(movementDTO.accountId());
 
         result = account.zipWith(client, (a, c) -> {
-                    if (isLessThanZero(a.initialBalance())
+                    if (Boolean.TRUE.equals(isLessThanZero(a.initialBalance()))
                             && movementDTO.movementType().getType().equals(MovementType.DEBIT.getType())) {
                         throw new AccountHasNoBalanceException(
                                 ExceptionMessage.ACCOUNT_HAS_NOT_BALANCE_FOR_DEBIT_TRANSACTION.getMessage());
@@ -97,33 +98,32 @@ public class MovementServiceImpl implements MovementService {
                             .accountId(a.id())
                             .accountNumber(a.accountNumber())
                             .accountType(a.accountType().getType())
+                            .initialBalance(a.initialBalance())
                             .state(a.status())
                             .build();
                 })
-                .flatMap(this.movementRepository::save)
-                .map(this.movementMapper::movementToMovementResponseDto)
-                .doOnNext(movementResponseDTO -> {
-                    log.info("Se realiza peiticion a microservicio cuenta para actualizar informacion de cuenta n°: {}", movementResponseDTO.accountNumber());
-                    this.externalRequestService.updateBalanceToAccountFromMicroserviciosAccount(
-                            movementDTO.accountId(), movementResponseDTO.balance());
-                });
+                .flatMap(movement -> this.externalRequestService.updateBalanceToAccountFromMicroserviciosAccount(
+                                movement.getAccountId(), movement.getBalance())
+                        .flatMap(account1 -> this.movementRepository.save(movement))
+                )
+                .map(this.movementMapper::movementToMovementResponseDto);
 
         return result;
     }
 
     @Override
     public Mono<Void> deleteMovement(String id) {
-        log.info("Se se realiza proceso de eliminacin de movimiento con id: {}", id);
+        log.info("Se se realiza proceso de eliminacion de movimiento con id: {}", id);
         return this.movementRepository.findById(id)
                 .switchIfEmpty(Mono.error(
                         new MovementNotFoundException(String.format(ExceptionMessage.MOVEMENT_NOT_FOUND.getMessage(), id))))
-                .doOnNext(this.movementRepository::delete)
+                .flatMap(this.movementRepository::delete)
                 .then();
     }
 
     @Override
     public Flux<MovementResponseDTO> filterMovementForRageDateAndClientId(LocalDateTime initDate, LocalDateTime endDate, Long clientId) {
-        return this.movementRepository.filterMovementForRageDateAndClientId(initDate, endDate, clientId)
+        return this.movementRepository.findAllByCreateAtBetweenAndClientId(initDate, endDate, clientId)
                 .map(this.movementMapper::movementToMovementResponseDto);
     }
 

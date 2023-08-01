@@ -7,7 +7,7 @@ public enum ExceptionMessage {
     CLIENT_NOT_FOUND_IN_MICROSERVICE_ACCOUNT("No existe cuenta en microservicios cuentas registrado en sistema con id: %d!"),
     ACCOUNT_NOT_ASSIGNED_TO_CLIENT("Cuenta con id: %d no se encuentra asignada a usuario con id: %d, por favor valide informacion!"),
     ACCOUNT_NOT_FOUND("No existe cuenta registrada en sistema con id: %d!"),
-    MOVEMENT_NOT_FOUND("No existe movimiento registrado en sistema con id: %d!"),
+    MOVEMENT_NOT_FOUND("No existe movimiento registrado en sistema con id: %s!"),
     ACCOUNT_TYPE_NOT_FOUND("No existe el tipo de cuenta: %s , registrada en sistema!"),
     ACCOUNT_ASSOCIATED_TO_CLIENT_NO_FOUND("No existe una cuenta con id: %d , asociado a algun usuario en microservicio de clientes!"),
     ACCOUNT_HAS_NOT_BALANCE_FOR_DEBIT_TRANSACTION("Saldo no disponible"),

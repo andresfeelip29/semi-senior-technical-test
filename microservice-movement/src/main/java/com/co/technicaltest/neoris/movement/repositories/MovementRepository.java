@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 @Repository
 public interface MovementRepository extends ReactiveMongoRepository<Movement, String> {
 
-   @Query("{'clientId': clientId, 'createAt': {$gte: initDate , $lte: endDate}}")
-   Flux<Movement> filterMovementForRageDateAndClientId(@Param("initDate") LocalDateTime initDate,
-                                                       @Param("endDate") LocalDateTime endDate,
-                                                       @Param("clientId") Long clientId );
+   Flux<Movement> findAllByCreateAtBetweenAndClientId(@Param("initDate") LocalDateTime initDate,
+                                                      @Param("endDate") LocalDateTime endDate,
+                                                      @Param("clientId") Long clientId);
 }

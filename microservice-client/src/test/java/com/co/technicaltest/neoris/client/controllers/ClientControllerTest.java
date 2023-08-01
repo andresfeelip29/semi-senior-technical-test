@@ -85,6 +85,8 @@ class ClientControllerTest {
         this.client = this.clientMapper.clientDtoToClient(this.saveClient);
         this.client.setId(CLIENT_ID);
 
+
+
         this.clientResponseDTO = this.clientMapper.clientToClientResponseDto(this.client);
     }
 

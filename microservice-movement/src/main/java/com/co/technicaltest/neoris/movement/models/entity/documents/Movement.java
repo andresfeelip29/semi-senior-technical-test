@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -54,5 +55,16 @@ public class Movement {
     @NotNull
     private Boolean state;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movement movement = (Movement) o;
+        return getId().equals(movement.getId()) && getCreateAt().equals(movement.getCreateAt()) && getMovementType() == movement.getMovementType() && getMovementValue().equals(movement.getMovementValue()) && getBalance().equals(movement.getBalance()) && getClientId().equals(movement.getClientId()) && getName().equals(movement.getName()) && getAccountId().equals(movement.getAccountId()) && getAccountNumber().equals(movement.getAccountNumber()) && getAccountType().equals(movement.getAccountType()) && getState().equals(movement.getState());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCreateAt(), getMovementType(), getMovementValue(), getBalance(), getClientId(), getName(), getAccountId(), getAccountNumber(), getAccountType(), getState());
+    }
 }

@@ -26,12 +26,28 @@ services:
     restart: always
     networks:
       - neoris
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: mongouser
+      MONGODB_INITDB_ROOT_PASSWORD: mongopass
+      MONGO_INITDB_DATABASE: db_movimiento
+    volumes:
+      - data-mongo:/data/db
+    restart: always
+    networks:
+      - neoris
 
 volumes:
   data-mysql:
     name: data-mysql
   data-postgres:
     name: data-postgres
+  data-mongo:
+    name: data-mongo
 
 networks:
   neoris:

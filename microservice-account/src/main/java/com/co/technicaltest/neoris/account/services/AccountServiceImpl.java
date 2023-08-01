@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -150,6 +151,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Boolean deleteAccount(Long accountId) {
         log.info("Se incia proceso de eliminacion de cuenta: {}", accountId);
         Account account = this.accountRepository.findById(accountId)
@@ -163,5 +165,24 @@ public class AccountServiceImpl implements AccountService {
             log.info("No se encontro cuenta con id: {}, asociada algun usuario en consulta a microservicio clientes", accountId);
             throw new ClientAccountNotFoundException(String.format(ExceptionMessage.ACCOUNT_ASSOCIATED_TO_CLIENT_NO_FOUND.getMessage(), accountId));
         }
+    }
+
+    @Override
+    @Transactional
+    public  Optional<AccountResponseDTO> updateBalanceAccount(Long accountId, BigDecimal newBalance) {
+        Optional<AccountResponseDTO> response;
+        log.info("Se incia proceso de actualizacion de balance de la cuenta con id: {} " +
+                "desde microservicio de movimientos", accountId);
+        Account account = this.accountRepository.findById(accountId)
+                .orElseThrow(() -> new AccountNotFoundException(String.format(ExceptionMessage.ACCOUNT_NOT_FOUND.getMessage(), accountId)));
+        account.setInitialBalance(newBalance);
+        response = Optional.ofNullable(this.accountMapper.accountToAccountResponseDto(this.accountRepository.save(account)));
+        if(response.isPresent()){
+            log.info("Nuevo balance actualizado con exito!");
+        }else{
+            log.info("Error a actualizar balance!");
+        }
+        return response;
+
     }
 }

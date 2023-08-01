@@ -52,9 +52,6 @@ public class Movement {
     private String accountType;
 
     @NotNull
-    private BigDecimal initialBalance;
-
-    @NotNull
     private Boolean state;
 
 

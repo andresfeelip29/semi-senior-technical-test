@@ -52,6 +52,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.co.technicaltest.neoris</groupId>
+                <artifactId>microservice-movement</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>

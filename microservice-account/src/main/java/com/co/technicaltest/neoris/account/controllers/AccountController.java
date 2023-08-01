@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,6 +51,14 @@ public class AccountController {
         log.info("Se recibe peticion de consulta de cuenta con id: {}", accountId);
         return this.accountService.findAccountById(accountId)
                 .map(account -> ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(account))
+                .orElse(ResponseEntity.badRequest().build());
+    }
+
+    @PutMapping("/external/")
+    public ResponseEntity<AccountResponseDTO> updateBalanceAccount(@RequestParam Long accountId, @RequestParam BigDecimal newBalance) {
+        log.info("Se recibe peticion externa desde microservicio de movimiento para actualizar balancee de cuenta con id: {}", accountId);
+        return this.accountService.updateBalanceAccount(accountId, newBalance)
+                .map(account -> ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(account))
                 .orElse(ResponseEntity.badRequest().build());
     }
 

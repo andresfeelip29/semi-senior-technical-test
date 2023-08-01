@@ -27,7 +27,7 @@ public class AccountController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<AccountResponseDTO>> getAllClients() {
+    public ResponseEntity<List<AccountResponseDTO>> getAllAccounts() {
         log.info("Se recibe peticion para consulta de todos los clientes");
         return ResponseEntity.ok(this.accountService.getAllAccounts());
     }

@@ -16,7 +16,7 @@ public interface ClientService {
     ClientResponseDTO saveClient(ClientDTO clientDTO);
     ClientResponseDTO updateClient(ClientDTO clientDTO, Long clientId);
     Boolean deleteClient(Long clientId);
-    void deleteAccountClientFromMicroserviceAccount(Long accountId);
+    void deleteAccountClientFromMicroserviceAccount(Long clientId, Long accountId);
     Optional<ClientQueryDTO> findClientByIdFromMicroserviceAccount(Long clientId);
     void saveClientAccountFromMicroserviceClient(ClientAccountQueryDTO clientAccountQueryDTO);
 

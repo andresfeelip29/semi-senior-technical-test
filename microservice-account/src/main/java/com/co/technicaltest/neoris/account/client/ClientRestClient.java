@@ -11,8 +11,8 @@ public interface ClientRestClient {
     @GetMapping("/external/{clientId}")
     Client findClientFromMicroserviceClient(@PathVariable Long clientId);
 
-    @DeleteMapping("/external/{accountId}")
-    void deleteAccountClientFromMicroserviceClient(@PathVariable Long accountId);
+    @DeleteMapping("/external/")
+    void deleteAccountClientFromMicroserviceClient(@RequestParam Long clientId ,@RequestParam Long accountId);
 
     @PostMapping("/external/")
     void saveClientAccountFromMicroserviceClient(@RequestBody ClientAccountQueryDTO clientAccountQueryDTO);

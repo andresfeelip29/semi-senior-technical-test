@@ -158,7 +158,7 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new AccountNotFoundException(String.format(ExceptionMessage.ACCOUNT_NOT_FOUND.getMessage(), accountId)));
         try {
             this.accountRepository.delete(account);
-            this.clientRestClient.deleteAccountClientFromMicroserviceClient(accountId);
+            this.clientRestClient.deleteAccountClientFromMicroserviceClient(account.getAccountClient().getClientId() , accountId);
             log.info("Se elimina cuenta con id: {}", accountId);
             return true;
         } catch (FeignException e) {

@@ -100,10 +100,10 @@ public class ClientController {
         return ResponseEntity.badRequest().build();
     }
 
-    @DeleteMapping("/external/{accountId}")
-    public ResponseEntity<Void> deleteAccountClientFromMicroserviceAccount(@PathVariable Long accountId) {
+    @DeleteMapping("/external/")
+    public ResponseEntity<Void> deleteAccountClientFromMicroserviceAccount(@RequestParam Long clientId,  @RequestParam Long accountId) {
         log.info("Se recibe peticion desde microservicio cuentas, para la eliminacion de cuenta con id: {}", accountId);
-        this.clientService.deleteAccountClientFromMicroserviceAccount(accountId);
+        this.clientService.deleteAccountClientFromMicroserviceAccount(clientId, accountId);
         return ResponseEntity.noContent().build();
     }
 

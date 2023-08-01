@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 public class Client extends Person {
 
-    public Client(){
+    public Client() {
         this.clientAccounts = new ArrayList<>();
     }
 
@@ -37,8 +37,12 @@ public class Client extends Person {
     @Transient
     private List<Account> accounts;
 
-    public void addClientUser(ClientAccount clientAccount){
+    public void addClientUser(ClientAccount clientAccount) {
         this.clientAccounts.add(clientAccount);
+    }
+
+    public void remoteClientUser(ClientAccount clientAccount) {
+        this.clientAccounts.remove(clientAccount);
     }
 
     @Override

@@ -33,16 +33,13 @@ public class ClientServiceImpl implements ClientService {
 
     private final AccountRestClient accountRestClient;
 
-    private final ClientAccountRepository clientAccountRepository;
 
     public ClientServiceImpl(ClientRepository clientRepository,
                              ClientMapper clientMapper,
-                             AccountRestClient accountRestClient,
-                             ClientAccountRepository clientAccountRepository) {
+                             AccountRestClient accountRestClient) {
         this.clientRepository = clientRepository;
         this.clientMapper = clientMapper;
         this.accountRestClient = accountRestClient;
-        this.clientAccountRepository = clientAccountRepository;
     }
 
     @Override
@@ -141,12 +138,17 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional
-    public void deleteAccountClientFromMicroserviceAccount(Long accountId) {
+    public void deleteAccountClientFromMicroserviceAccount(Long clientId, Long accountId) {
         log.info("Se inicia proceso de eliminar de cuenta con id: {}, desde microservicio de cuentas", accountId);
-        ClientAccount clientAccount = this.clientAccountRepository.findById(accountId).
-                orElseThrow(() -> new ClientAccountNotFoundException(String.format(ExceptionMessage.ACCOUNT_ASSOCIATED_TO_CLIENT_NO_FOUND.getMessage(),
-                        accountId)));
-        this.clientAccountRepository.delete(clientAccount);
-        log.info("Se elimina cuenta con id: {}, asociada al usuario con id: {}", accountId, clientAccount.getId());
+        Client client = this.clientRepository.findById(clientId).
+                orElseThrow(() -> new ClientNotFoundException(String.format(ExceptionMessage.CLIENT_NOT_FOUND.getMessage(),
+                        clientId)));
+        client.getClientAccounts().forEach(clientAccount -> {
+            if (clientAccount.getAccountId().equals(accountId)) {
+                client.remoteClientUser(clientAccount);
+            }
+        });
+        this.clientRepository.save(client);
+        log.info("Se elimina cuenta con id: {}, asociada al usuario con id: {}", accountId, clientId);
     }
 }

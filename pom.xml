@@ -20,9 +20,9 @@
 
     <groupId>com.co.technicaltest.neoris</groupId>
     <artifactId>technical-test-neoris</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>

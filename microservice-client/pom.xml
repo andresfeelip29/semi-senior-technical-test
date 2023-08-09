@@ -11,6 +11,7 @@
 
     <artifactId>microservice-client</artifactId>
 
+
     <properties>
     </properties>
 
@@ -37,6 +38,7 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
+
 
 
 </project>

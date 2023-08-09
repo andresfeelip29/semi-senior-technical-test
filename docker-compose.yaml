@@ -1,67 +1,67 @@
 version: "3.9"
 services:
-  microservice-account:
-    container_name: microservice-account
-    build:
-      context: ./
-      dockerfile: ./microservice-account/Dockerfile
-    #image: microservice-account
-    ports:
-      - "8002:8002"
-    environment:
-      PORT: 8002
-      DB_HOST: postgres14:5432
-      DATA_BASE: db_cuenta
-      DB_USERNAME: postgres
-      DB_PASSWORD: sasa
-      CLIENT_URL: microservice-client:8001/api/v1
-    networks:
-      - neoris
-    depends_on:
-      - postgres14
-    restart: always
-  microservice-client:
-      container_name: microservice-client
-      build:
-        context: ./
-        dockerfile: ./microservice-client/Dockerfile
-      image: microservice-client
-      ports:
-        - "8001:8001"
-      environment:
-        PORT: 8001
-        DB_HOST: mysql8:3306
-        DATA_BASE: db_cliente
-        DB_USERNAME: root
-        DB_PASSWORD: sasa
-        ACCOUNT_URL: microservice-account:8001/api/v1
-      networks:
-        - neoris
-      depends_on:
-        - mysql8
-      restart: always
-  microservice-movement:
-    container_name: microservice-movement
-    build:
-      context: ./
-      dockerfile: ./microservice-movement/Dockerfile
-    image: microservice-movement
-    ports:
-      - "8003:8003"
-    environment:
-      PORT: 8003
-      DB_HOST: mongodb:27017
-      DATA_BASE: db_movimiento
-      DB_USERNAME: mongouser
-      DB_PASSWORD: mongopass
-      ACCOUNT_URL: microservice-account:8001/api/v1/cuentas
-      CLIENT_URL: microservice-client:8001/api/v1/clientes
-      BASE_URL:
-    networks:
-      - neoris
-    depends_on:
-      - mongodb
-    restart: always
+#  microservice-account:
+  #  #    container_name: microservice-account
+  #    build:
+  #     context: ./
+  #     dockerfile: ./microservice-account/Dockerfile
+  # image: microservice-account
+  # ports:
+  #   - "8002:8002"
+  # environment:
+  #   PORT: 8002
+  #   DB_HOST: postgres14:5432
+  #   DATA_BASE: db_cuenta
+  #   DB_USERNAME: postgres
+  #   DB_PASSWORD: sasa
+  #   CLIENT_URL: microservice-client:8001/api/v1
+  # networks:
+  #   - neoris
+  # depends_on:
+  #   - postgres14
+  # restart: always
+  #m#icroservice-client:
+    #  container_name: microservice-client
+    # build:
+    #   context: ./
+    ##   dockerfile: ./microservice-client/Dockerfile
+    ##  image: microservice-client
+    #ports:
+    #   - "8001:8001"
+    # environment:
+    ##   PORT: 8001
+    #  DB_HOST: mysql8:3306
+    #   DATA_BASE: db_cliente
+    ###   DB_USERNAME: root
+    ### DB_PASSWORD: sasa
+    # ACCOUNT_URL: microservice-account:8001/api/v1
+    # networks:
+    #   - neoris
+    # depends_on:
+    #   - mysql8
+  # restart: always
+    #microservice-movement:
+    #container_name: microservice-movement
+    #build:
+    # context: ./
+    # dockerfile: ./microservice-movement/Dockerfile
+    #image: microservice-movement
+    #ports:
+    # - "8003:8003"
+    #environment:
+    # PORT: 8003
+    # DB_HOST: mongodb:27017
+    # DATA_BASE: db_movimiento
+    # DB_USERNAME: mongouser
+    # DB_PASSWORD: mongopass
+    # ACCOUNT_URL: microservice-account:8001/api/v1/cuentas
+    # CLIENT_URL: microservice-client:8001/api/v1/clientes
+    # BASE_URL:
+    #networks:
+    # - neoris
+    #depends_on:
+    # - mongodb
+  #restart: always
   mysql8:
     container_name: mysql8
     image: mysql:8

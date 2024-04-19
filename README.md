@@ -3,4 +3,4 @@ Example app with Java 18 using Spring Boot - JPA - Security with JWT - Spring cl
 
 ### Hello!
 
-This repository is created for test in neoris
+This repository is created for technical test
